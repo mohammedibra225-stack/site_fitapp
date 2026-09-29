@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FITAPP — Mangez juste. Progressez vraiment.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F2F4EC;
+    --bg-card:#FFFFFF;
+    --ink:#1C2118;
+    --muted:#5B6355;
+    --forest:#2F4B3C;
+    --forest-2:#25392D;
+    --mango:#E2892E;
+    --line:#CBD2BF;
+    --line-strong:#9AA48D;
+    --radius:2px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#14170F;
+      --bg-card:#1B1F16;
+      --ink:#ECEFE4;
+      --muted:#A3AC96;
+      --forest:#7FAE8C;
+      --forest-2:#9BC4A6;
+      --mango:#F0A555;
+      --line:#333A2A;
+      --line-strong:#4A5340;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#14170F;
+    --bg-card:#1B1F16;
+    --ink:#ECEFE4;
+    --muted:#A3AC96;
+    --forest:#7FAE8C;
+    --forest-2:#9BC4A6;
+    --mango:#F0A555;
+    --line:#333A2A;
+    --line-strong:#4A5340;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    transition:background .3s ease,color .3s ease;
+  }
+  a{color:inherit;}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,monospace;}
+  .serif{font-family:'Fraunces',Georgia,serif;}
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+  @media (max-width:640px){ .wrap{padding:0 20px;} }
+
+  /* header */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:var(--bg);
+    border-bottom:1px solid var(--line);
+  }
+  .header-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 0;
+  }
+  .logo{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:1.35rem;
+    letter-spacing:-0.01em;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo-mark{
+    width:26px; height:26px;
+    border:1.5px solid var(--ink);
+    display:inline-flex; align-items:center; justify-content:center;
+    font-size:.75rem;
+    border-radius:50%;
+  }
+  nav{display:flex; align-items:center; gap:32px;}
+  nav a{
+    font-size:.92rem; text-decoration:none; color:var(--muted);
+    border-bottom:1px solid transparent;
+    padding-bottom:2px;
+  }
+  nav a:hover{color:var(--ink); border-color:var(--line-strong);}
+  .nav-links{display:flex; gap:28px;}
+  @media (max-width:760px){ .nav-links{display:none;} }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:11px 20px;
+    font-size:.92rem; font-weight:600;
+    text-decoration:none;
+    border-radius:var(--radius);
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform .15s ease, background .2s ease, opacity .2s ease;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:var(--forest); color:#F5F7EE;}
+  .btn-primary:hover{background:var(--forest-2);}
+  :root[data-theme="dark"] .btn-primary{color:#12160E;}
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]) .btn-primary{color:#12160E;}
+  }
+  .btn-ghost{border-color:var(--line-strong); color:var(--ink); background:transparent;}
+  .btn-ghost:hover{border-color:var(--ink);}
+
+  /* hero */
+  .hero{
+    padding:76px 0 64px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:64px;
+    align-items:center;
+  }
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr; gap:48px;}
+  }
+  .eyebrow{
+    display:flex; align-items:center; gap:8px;
+    font-size:.82rem; color:var(--muted);
+    margin-bottom:22px;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--mango);}
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(2.4rem, 4.6vw, 3.6rem);
+    line-height:1.06;
+    letter-spacing:-0.01em;
+    margin:0 0 22px;
+  }
+  h1 em{
+    font-style:italic;
+    color:var(--forest);
+  }
+  .lede{
+    font-size:1.08rem;
+    line-height:1.6;
+    color:var(--muted);
+    max-width:46ch;
+    margin:0 0 32px;
+  }
+  .hero-cta{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:48px;}
+
+  .stat-row{
+    display:flex;
+    border-top:1px solid var(--line);
+  }
+  .stat{
+    flex:1;
+    padding:16px 20px 0 0;
+    border-right:1px solid var(--line);
+  }
+  .stat:last-child{border-right:none; padding-right:0;}
+  .stat:first-child{padding-left:0;}
+  .stat-num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:1.5rem; font-weight:600;
+    color:var(--forest);
+  }
+  .stat-label{font-size:.8rem; color:var(--muted); margin-top:2px;}
+
+  /* scan card */
+  .scan-card{
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    padding:0;
+    position:relative;
+  }
+  .scan-photo{
+    aspect-ratio:16/10.5;
+    background:
+      radial-gradient(circle at 32% 30%, rgba(226,137,46,.35), transparent 55%),
+      radial-gradient(circle at 68% 62%, rgba(47,75,60,.28), transparent 50%),
+      var(--forest-2);
+    display:flex; align-items:center; justify-content:center;
+    font-size:3.2rem;
+    border-bottom:1px solid var(--line);
+    position:relative;
+    overflow:hidden;
+  }
+  .scan-photo::after{
+    content:"";
+    position:absolute; inset:14px;
+    border:1px dashed rgba(255,255,255,.55);
+  }
+  .scan-badge{
+    position:absolute; top:26px; left:26px;
+    background:rgba(20,23,15,.72);
+    color:#F5F7EE;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;
+    padding:5px 10px;
+    display:flex; align-items:center; gap:6px;
+    letter-spacing:.02em;
+  }
+  .scan-badge .pulse{
+    width:6px;height:6px;border-radius:50%;
+    background:#8FE39A;
+    box-shadow:0 0 0 0 rgba(143,227,154,.6);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(143,227,154,.55);}
+    70%{box-shadow:0 0 0 8px rgba(143,227,154,0);}
+    100%{box-shadow:0 0 0 0 rgba(143,227,154,0);}
+  }
+  .scan-body{padding:22px 26px 26px;}
+  .scan-title-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom:2px;
+  }
+  .scan-title{font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500;}
+  .scan-confidence{font-family:'IBM Plex Mono',monospace; font-size:.78rem; color:var(--forest);}
+  .scan-sub{font-size:.85rem; color:var(--muted); margin-bottom:18px;}
+  .macro-table{width:100%; border-collapse:collapse; font-family:'IBM Plex Mono',monospace;}
+  .macro-table tr{border-top:1px solid var(--line);}
+  .macro-table tr:first-child{border-top:1px solid var(--ink);}
+  .macro-table td{padding:9px 0; font-size:.86rem;}
+  .macro-table td:last-child{text-align:right; font-weight:600;}
+  .macro-table tr.total{border-top:2px solid var(--ink); border-bottom:1px solid var(--ink);}
+  .macro-table tr.total td{padding:11px 0; font-weight:600; font-size:.95rem;}
+  .scan-foot{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-top:16px; font-size:.76rem; color:var(--muted);
+  }
+
+  .notice{
+    margin-top:28px;
+    padding:14px 18px;
+    border:1px solid var(--line-strong);
+    border-left:3px solid var(--mango);
+    font-size:.86rem;
+    line-height:1.55;
+    color:var(--muted);
+    background:var(--bg-card);
+  }
+  .notice strong{color:var(--ink);}
+
+  /* section shell */
+  section{padding:72px 0; border-bottom:1px solid var(--line);}
+  .section-head{
+    display:grid; grid-template-columns:1fr 1.3fr; gap:48px;
+    margin-bottom:52px;
+  }
+  @media (max-width:760px){ .section-head{grid-template-columns:1fr;} }
+  .section-label{font-size:.82rem; color:var(--muted);}
+  h2{
+    font-family:'Fraunces',serif; font-weight:500;
+    font-size:clamp(1.8rem,3vw,2.3rem);
+    line-height:1.15; margin:0;
+  }
+  .section-desc{color:var(--muted); font-size:1rem; line-height:1.6; margin:0; align-self:end;}
+
+  /* features as labelled list, not cards */
+  .feature-list{
+    display:grid; grid-template-columns:1fr 1fr; gap:0;
+    border-top:1px solid var(--line);
+  }
+  @media (max-width:760px){ .feature-list{grid-template-columns:1fr;} }
+  .feature{
+    padding:28px 30px 28px 0;
+    border-bottom:1px solid var(--line);
+    border-left:2px solid transparent;
+    display:flex; gap:18px;
+  }
+  .feature:nth-child(odd){padding-right:36px;}
+  .feature:nth-child(even){padding-left:36px;}
+  @media (max-width:760px){
+    .feature:nth-child(even){padding-left:0;}
+  }
+  .feature-icon{
+    font-size:1.4rem; line-height:1;
+    width:34px; flex-shrink:0;
+  }
+  .feature h3{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:1.02rem;
+    margin:0 0 8px;
+  }
+  .feature p{margin:0; color:var(--muted); font-size:.92rem; line-height:1.55;}
+
+  /* how it works — numbered, genuinely sequential */
+  .steps{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:0;
+    border-top:1px solid var(--line); border-left:1px solid var(--line);
+  }
+  @media (max-width:760px){ .steps{grid-template-columns:1fr;} }
+  .step{
+    padding:30px 28px; border-right:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .step-num{
+    font-family:'IBM Plex Mono',monospace; color:var(--mango); font-size:.85rem; margin-bottom:14px;
+  }
+  .step h3{font-family:'Fraunces',serif; font-weight:500; font-size:1.15rem; margin:0 0 10px;}
+  .step p{color:var(--muted); font-size:.9rem; line-height:1.55; margin:0;}
+
+  /* download */
+  .download{
+    background:var(--forest);
+    color:#F5F7EE;
+    border-bottom:none;
+  }
+  :root[data-theme="dark"] .download{color:#0E120B;}
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]) .download{color:#0E120B;}
+  }
+  .download-inner{
+    display:grid; grid-template-columns:1.2fr 0.8fr; gap:48px; align-items:center;
+  }
+  @media (max-width:800px){ .download-inner{grid-template-columns:1fr;} }
+  .download h2{color:inherit;}
+  .download .section-label{color:rgba(245,247,238,.65);}
+  .download p{color:rgba(245,247,238,.78); line-height:1.6; max-width:44ch;}
+  .download-box{
+    border:1px solid rgba(245,247,238,.35);
+    padding:26px;
+  }
+  .download-box .dl-row{
+    display:flex; justify-content:space-between; font-size:.82rem;
+    padding:10px 0; border-top:1px solid rgba(245,247,238,.2);
+  }
+  .download-box .dl-row:first-child{border-top:none;}
+  .download .btn-primary{background:#F5F7EE; color:var(--forest);}
+  .download .btn-primary:hover{opacity:.9; background:#F5F7EE;}
+
+  footer{padding:32px 0; font-size:.82rem; color:var(--muted);}
+  .footer-inner{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+
+  ::selection{background:var(--mango); color:#1C2118;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap header-inner">
+    <div class="logo"><img src="logo.png" alt="FITAPP" class="logo-mark">FITAPP</div>
+    <nav>
+      <div class="nav-links">
+        <a href="#fonctionnalites">Fonctionnalités</a>
+        <a href="#comment">Comment ça marche</a>
+        <a href="#telecharger">Télécharger</a>
+      </div>
+      <a href="#telecharger" class="btn btn-primary">Télécharger l'APK</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span>Version 1.0 disponible</div>
+      <h1>Mangez juste.<br>Progressez <em>vraiment</em>.</h1>
+      <p class="lede">FITAPP calcule vos besoins nutritionnels selon votre sport et votre objectif, reconnaît vos repas en photo, et construit votre semaine d'entraînement complète — du débutant au sportif confirmé.</p>
+      <div class="hero-cta">
+        <a href="#telecharger" class="btn btn-primary">Télécharger l'APK</a>
+        <a href="#fonctionnalites" class="btn btn-ghost">Voir les fonctionnalités</a>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><div class="stat-num">4</div><div class="stat-label">langues (FR/EN/AR/ES)</div></div>
+        <div class="stat"><div class="stat-num">50+</div><div class="stat-label">sports couverts</div></div>
+        <div class="stat"><div class="stat-num">7j</div><div class="stat-label">programme généré en un coup</div></div>
+      </div>
+    </div>
+
+    <div class="scan-card">
+      <div class="scan-photo">
+        🍛
+        <div class="scan-badge"><span class="pulse"></span>ANALYSE IA · LOCALE</div>
+      </div>
+      <div class="scan-body">
+        <div class="scan-title-row">
+          <span class="scan-title">Poulet grillé, riz, brocoli</span>
+          <span class="scan-confidence">94% confiance</span>
+        </div>
+        <div class="scan-sub">Détecté à partir d'une photo · repas de 14:12</div>
+        <table class="macro-table">
+          <tr class="total"><td>Calories</td><td>512 kcal</td></tr>
+          <tr><td>Protéines</td><td>38 g</td></tr>
+          <tr><td>Glucides</td><td>54 g</td></tr>
+          <tr><td>Lipides</td><td>14 g</td></tr>
+        </table>
+        <div class="scan-foot">
+          <span>Ajusté à votre objectif du jour</span>
+          <span>−22% déficit</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="notice">
+      <strong>Version 1.0 :</strong> les serveurs peuvent être un peu lents, surtout au premier lancement. Si l'appli ne répond plus, quittez-la puis rouvrez-la — ça résout la grande majorité des cas.
+    </div>
+  </div>
+</section>
+
+<section id="fonctionnalites">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label">Fonctionnalités</div>
+      <h2>Une seule appli pour manger, s'entraîner et progresser</h2>
+    </div>
+    <div class="feature-list">
+      <div class="feature">
+        <div class="feature-icon">📷</div>
+        <div>
+          <h3>Scan de repas par IA</h3>
+          <p>Prenez votre repas en photo : l'appli identifie les aliments et estime les quantités, puis calcule calories et macros automatiquement — analyse traitée en local, sans envoi cloud.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎯</div>
+        <div>
+          <h3>Objectifs personnalisés</h3>
+          <p>Calories et macros recalculés selon votre profil, votre sport, votre niveau et votre objectif — perte de poids, prise de masse ou maintien.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🗓</div>
+        <div>
+          <h3>Programme hebdomadaire généré</h3>
+          <p>Sept jours de séances assemblés automatiquement, avec espacement intelligent de l'effort et récupération simulée jour après jour.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">💧</div>
+        <div>
+          <h3>Suivi hydratation</h3>
+          <p>Un objectif d'eau quotidien ajusté à votre activité, avec rappel de progression tout au long de la journée.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">☪</div>
+        <div>
+          <h3>Filtre halal fiable</h3>
+          <p>Le statut halal de chaque aliment est explicite — halal, non-halal ou inconnu — jamais deviné automatiquement à partir d'un nom.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">💳</div>
+        <div>
+          <h3>Budget en DZD</h3>
+          <p>Le coût réel de vos repas et recettes, basé sur des prix locaux — jamais un prix inventé quand la donnée manque.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="comment">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label">Comment ça marche</div>
+      <h2>Trois étapes, chaque jour</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Photographiez votre repas</h3>
+        <p>Ou choisissez-le dans votre inventaire alimentaire. L'appli reconnaît les aliments et les quantités.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Recevez vos macros</h3>
+        <p>Calories, protéines, glucides et lipides sont calculés et comparés à votre objectif du jour.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Suivez votre programme</h3>
+        <p>Votre séance du jour, votre récupération et votre progression s'ajustent en continu.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="download" id="telecharger">
+  <div class="wrap download-inner">
+    <div>
+      <div class="section-label">Téléchargement</div>
+      <h2>FITAPP est disponible — version 1.0</h2>
+      <p>Première version publique. Les serveurs peuvent parfois répondre lentement : si l'appli reste bloquée, quittez-la complètement puis rouvrez-la.</p>
+      <div class="hero-cta" style="margin-top:28px;">
+        <a href="Fitapp.apk" class="btn btn-primary">Télécharger l'APK — Gratuit</a>
+      </div>
+    </div>
+    <div class="download-box">
+      <div class="dl-row"><span>Statut</span><span>Version 1.0</span></div>
+      <div class="dl-row"><span>Plateforme</span><span>Android</span></div>
+      <div class="dl-row"><span>Langues</span><span>FR · EN · AR · ES</span></div>
+      <div class="dl-row"><span>Si l'appli bloque</span><span>Quitter, rouvrir</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>FITAPP</span>
+    <span>Développé par Mohammed Ibrahim Benabdallah · © 2026</span>
+  </div>
+</footer>
+
+</body>
+</html>
