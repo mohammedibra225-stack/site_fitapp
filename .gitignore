@@ -1,0 +1,4 @@
+*.apk
+*.code-workspace
+node_modules/
+.env
